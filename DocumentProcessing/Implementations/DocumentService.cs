@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using DocumentProcessing.Interfaces;
 
 namespace DocumentProcessing.Implementations
 {
     public sealed class DocumentService : IDocumentService
     {
+        private readonly IDocumentBuilder _docBuilder;
+
+        public DocumentService(IDocumentBuilder docBuilder)
+        {
+            _docBuilder = docBuilder;
+        }
+
         public Stream GenerateDocument(string documentText)
         {
-            return null;
+            return _docBuilder.GenerateDocument(documentText);
         }
 
         public int GetLog()
