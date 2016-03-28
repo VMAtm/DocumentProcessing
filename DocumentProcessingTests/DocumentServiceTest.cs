@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.ServiceModel;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using DocumentProcessing.Implementations;
 using NUnit.Framework;
+using UnitTests.DocService;
 
 namespace DocumentProcessingTests
 {
@@ -12,60 +13,63 @@ namespace DocumentProcessingTests
     public class DocumentServiceTest
     {
         private static ServiceHost _documentsService;
+        private static DocumentServiceClient _documentsServiceProxy;
 
         [OneTimeSetUp]
-        public void Init()
+        public static void Init()
         {
-            
+            _documentsService = new ServiceHost(typeof(DocumentService));
+            _documentsService.Open();
+            _documentsServiceProxy = new DocumentServiceClient();
         }
 
         [OneTimeTearDown]
-        public void Dispose()
+        public static void Dispose()
         {
-            
+            _documentsService.Close();
         }
 
-        [Test]
-        public void GetInitialLogTest()
+        [TestCase(0)]
+        public void GetInitialLogTest(int expected)
         {
-            throw new NotImplementedException();
+            Assert.AreEqual(_documentsServiceProxy.GetLog(), expected);
         }
 
-
-        [Test]
-        public void GenerateDocumentWithRandomStringTest()
+        [TestCase("")]
+        [TestCase("asdfasdfasdfas  asdfsd sd fdferklgj\r\ndfkmg njk h18 12k -12  =-a {} {{{}adsd 1 \\")]
+        [TestCase("asdfasdfasdfas  asdfsd sd fdferklgj dfkmg njk h18 12k -12  =-a {} {{{}adsd 1 \\")]
+        public void GenerateDocumentWithRandomStringTest(string expectedContent)
         {
-
-        }
-
-        [Test]
-        public void GenerateDocumentWithEmptyStringTest()
-        {
-
+            using (var result = new StreamReader(_documentsServiceProxy.GenerateDocument(expectedContent)))
+            {
+                var resultContent = result.ReadToEnd();
+                Assert.IsTrue(resultContent.Contains(expectedContent));
+            };
         }
 
         [Test]
         public void GenerateDocumentWithLongStringTest()
         {
-
+            var sb = new StringBuilder();
+            for (var i = 0; i < 1000; ++i)
+            {
+                sb.AppendLine(i.ToString());
+            }
+            var expectedContent = sb.ToString();
+            using (var result = new StreamReader(_documentsServiceProxy.GenerateDocument(expectedContent)))
+            {
+                var resultContent = result.ReadToEnd();
+                Assert.IsTrue(resultContent.Contains(expectedContent));
+            };
         }
 
-        [Test]
-        public void GenerateDocumentWithNewLinesTest()
+        [TestCase(1)]
+        public void GetLogAfterSomeOperationsTest(int expected)
         {
-
-        }
-
-        [Test]
-        public void GetLogAfterSomeOperationsTest()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void GetLogTest()
-        {
-
+            var currentLogs = _documentsServiceProxy.GetLog();
+            _documentsServiceProxy.GenerateDocument(string.Empty);
+            var afterLogs = _documentsServiceProxy.GetLog();
+            Assert.AreEqual(afterLogs - currentLogs, expected);
         }
     }
 }

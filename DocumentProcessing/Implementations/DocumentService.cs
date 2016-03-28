@@ -8,7 +8,7 @@ using DocumentProcessing.Interfaces;
 
 namespace DocumentProcessing.Implementations
 {
-    internal class DocumentService : IDocumentService
+    public sealed class DocumentService : IDocumentService
     {
         public Stream GenerateDocument(string documentText)
         {

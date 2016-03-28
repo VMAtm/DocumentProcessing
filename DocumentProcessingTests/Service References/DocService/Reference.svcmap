@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2ee4945b-b727-44c0-9830-aa73e49a5165" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8081/DocumentProcessing" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DocumentProcessing.xsd" MetadataType="Schema" ID="5d3a29d1-3d40-4af2-8bbe-68857c5450df" SourceId="1" SourceUrl="http://localhost:8081/DocumentProcessing?xsd=xsd2" />
+    <MetadataFile FileName="DocumentProcessing1.xsd" MetadataType="Schema" ID="c60db7fa-6e63-4fa8-8ce1-f42f16497e4a" SourceId="1" SourceUrl="http://localhost:8081/DocumentProcessing?xsd=xsd0" />
+    <MetadataFile FileName="DocumentProcessing2.xsd" MetadataType="Schema" ID="9cfa9203-f22f-4a87-9551-f775b86bdbd2" SourceId="1" SourceUrl="http://localhost:8081/DocumentProcessing?xsd=xsd1" />
+    <MetadataFile FileName="DocumentProcessing.disco" MetadataType="Disco" ID="8b638cf1-3d10-4bba-822e-c144cea45f49" SourceId="1" SourceUrl="http://localhost:8081/DocumentProcessing?disco" />
+    <MetadataFile FileName="DocumentService.wsdl" MetadataType="Wsdl" ID="5165fd0b-47ce-4eda-9bea-aa8e9fdbb579" SourceId="1" SourceUrl="http://localhost:8081/DocumentProcessing?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
