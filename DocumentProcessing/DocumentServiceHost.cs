@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel;
+using DocumentProcessing.Implementations;
 
 namespace DocumentProcessing
 {
@@ -10,6 +8,15 @@ namespace DocumentProcessing
     {
         static void Main(string[] args)
         {
+            using (var host = new ServiceHost(typeof(DocumentService)))
+            {
+                host.Open();
+
+                Console.WriteLine("The service is ready at {0}", host.BaseAddresses);
+                Console.WriteLine("Press <Enter> to stop the service.");
+                Console.ReadLine();
+                host.Close();
+            }
         }
     }
 }
