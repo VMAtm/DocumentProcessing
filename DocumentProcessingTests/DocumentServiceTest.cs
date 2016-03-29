@@ -1,32 +1,48 @@
-﻿using System;
-using System.IO;
-using System.ServiceModel;
+﻿using System.IO;
 using System.Text;
-using System.Threading;
 using DocumentProcessing.Implementations;
+using DocumentProcessing.Interfaces;
+using DocumentProcessingTests.DocService;
+using Ninject;
+using Ninject.Extensions.Wcf;
+using Ninject.Extensions.Wcf.SelfHost;
+using Ninject.MockingKernel;
+using Ninject.MockingKernel.Moq;
+using Ninject.Web.Common.SelfHost;
 using NUnit.Framework;
-using UnitTests.DocService;
 
 namespace DocumentProcessingTests
 {
     [TestFixture]
     public class DocumentServiceTest
     {
-        private static ServiceHost _documentsService;
+        private static NinjectSelfHostBootstrapper _selfHost;
         private static DocumentServiceClient _documentsServiceProxy;
 
         [OneTimeSetUp]
+        // ReSharper disable UnusedMember.Global
         public static void Init()
+        // ReSharper restore UnusedMember.Global
         {
-            _documentsService = new ServiceHost(typeof(DocumentService));
-            _documentsService.Open();
+            var docServiceToHost = NinjectWcfConfiguration.Create<DocumentService, NinjectServiceSelfHostFactory>();
+            _selfHost = new NinjectSelfHostBootstrapper(CreateKernel, docServiceToHost);
+            _selfHost.Start();
             _documentsServiceProxy = new DocumentServiceClient();
         }
 
-        [OneTimeTearDown]
-        public static void Dispose()
+        private static IKernel CreateKernel()
         {
-            _documentsService.Close();
+            var kernel = new MoqMockingKernel();
+            kernel.Bind<IDocumentBuilder>().ToMock();
+            return kernel;
+        }
+
+        [OneTimeTearDown]
+        // ReSharper disable UnusedMember.Global
+        public static void Dispose()
+        // ReSharper restore UnusedMember.Global
+        {
+            _selfHost.Dispose();
         }
 
         [TestCase(0)]
@@ -44,7 +60,7 @@ namespace DocumentProcessingTests
             {
                 var resultContent = result.ReadToEnd();
                 Assert.IsTrue(resultContent.Contains(expectedContent));
-            };
+            }
         }
 
         [Test]
@@ -60,7 +76,7 @@ namespace DocumentProcessingTests
             {
                 var resultContent = result.ReadToEnd();
                 Assert.IsTrue(resultContent.Contains(expectedContent));
-            };
+            }
         }
 
         [TestCase(1)]

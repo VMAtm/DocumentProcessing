@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnitTests.DocService {
+namespace DocumentProcessingTests.DocService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -29,12 +29,12 @@ namespace UnitTests.DocService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IDocumentServiceChannel : UnitTests.DocService.IDocumentService, System.ServiceModel.IClientChannel {
+    public interface IDocumentServiceChannel : DocumentProcessingTests.DocService.IDocumentService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DocumentServiceClient : System.ServiceModel.ClientBase<UnitTests.DocService.IDocumentService>, UnitTests.DocService.IDocumentService {
+    public partial class DocumentServiceClient : System.ServiceModel.ClientBase<DocumentProcessingTests.DocService.IDocumentService>, DocumentProcessingTests.DocService.IDocumentService {
         
         public DocumentServiceClient() {
         }

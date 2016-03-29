@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using DocumentProcessing.Implementations;
+using DocumentProcessing.Interfaces;
+using Ninject;
+using Ninject.Extensions.Wcf;
+using Ninject.Extensions.Wcf.SelfHost;
+using Ninject.Web.Common.SelfHost;
 
 namespace DocumentProcessing
 {
@@ -9,15 +15,24 @@ namespace DocumentProcessing
     {
         static void Main(string[] args)
         {
-            using (var host = new ServiceHost(typeof(DocumentService)))
-            {
-                host.Open();
+            var docServiceToHost = NinjectWcfConfiguration.Create<DocumentService, NinjectServiceSelfHostFactory>();
 
-                Console.WriteLine("The service is ready at {0}", host.BaseAddresses.First().AbsoluteUri);
+            using (var selfHost = new NinjectSelfHostBootstrapper(CreateKernel, docServiceToHost))
+            {
+                selfHost.Start();
+                Console.WriteLine("The service is ready at {0}", "");// docServiceToHost.BaseAddresses.First().AbsoluteUri);
                 Console.WriteLine("Press <Enter> to stop the service.");
                 Console.ReadLine();
-                host.Close();
             }
+        }
+
+        private static IKernel CreateKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            kernel.Bind<IDocumentService>().To<DocumentService>();
+            kernel.Bind<IDocumentBuilder>().To<DocumentBuilder>();
+            return kernel;
         }
     }
 }
