@@ -1,2 +1,2 @@
 # DocumentProcessing
-Simple WCF Fro document storage and processing
+Simple WCF for document storage and processing
