@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using DocumentClient.DocService;
@@ -7,24 +8,30 @@ namespace DocumentClient
 {
     static class Program
     {
+        private const char Yes = 'Y';
+        private const string TestFilePath = "TestFilePath";
+
         static void Main(string[] args)
         {
-            Console.WriteLine("This is a test application for the document processing module.");
-            Console.WriteLine("Please, provide a string to be written into a pdf document.");
+            Console.WriteLine(Properties.Resources.Program_Main_Intro);
+            Console.WriteLine(Properties.Resources.Program_Main_String_To_Test);
             var line = Console.ReadLine();
+            var testFilePath = ConfigurationManager.AppSettings[TestFilePath];
+
             using (var documentsServiceProxy = new DocumentServiceClient())
             {
                 using (var stream = documentsServiceProxy.GenerateDocument(line))
-                using (var file = new FileStream("test.pdf", FileMode.Create, FileAccess.Write))
+                using (var file = new FileStream(testFilePath, FileMode.Create, FileAccess.Write))
                 {
                     stream.CopyTo(file);
                 }
             }
-            Console.WriteLine("Document creation completed. Open the result (this will start a new process so you do need a pdf reader application installed)? (Y/N)");
+
+            Console.WriteLine(Properties.Resources.Program_Main_Document_Creation_Completed);
             var choice = Console.Read();
-            if (choice == 'Y')
+            if (choice == Yes)
             {
-                Process.Start("test.pdf");
+                Process.Start(testFilePath);
             }
         }
     }
