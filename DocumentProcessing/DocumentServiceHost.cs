@@ -11,6 +11,12 @@ namespace DocumentProcessing
 {
     static class DocumentServiceHost
     {
+        /// <summary>
+        /// http://stackoverflow.com/q/25102582/213550
+        /// https://pieterderycke.wordpress.com/2011/05/09/using-an-ioc-container-to-create-wcf-service-instances/
+        /// http://codereview.stackexchange.com/q/33379/4889
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             var docServiceToHost = NinjectWcfConfiguration.Create<DocumentService, NinjectServiceSelfHostFactory>();

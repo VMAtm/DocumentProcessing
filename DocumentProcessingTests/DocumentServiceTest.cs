@@ -45,6 +45,17 @@ namespace DocumentProcessingTests
             _selfHost.Dispose();
         }
 
+        /// <summary>
+        /// Testing
+        /// https://blogs.msdn.microsoft.com/ploeh/2006/12/03/unit-testing-wcf-services/
+        /// https://blogs.msdn.microsoft.com/ploeh/2006/12/04/integration-testing-wcf-services/
+        /// https://msdn.microsoft.com/en-us/library/hh323698(v=vs.100).aspx
+        /// https://msdn.microsoft.com/en-us/library/hh323710(v=vs.100).aspx
+        /// https://msdn.microsoft.com/en-us/library/hh323690(v=vs.100).aspx
+        /// Mocking
+        /// http://stackoverflow.com/q/13212655/213550
+        /// </summary>
+        /// <param name="expected"></param>
         [TestCase(0)]
         public void GetInitialLogTest(int expected)
         {
