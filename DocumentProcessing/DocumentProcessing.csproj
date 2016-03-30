@@ -85,6 +85,8 @@
     <Compile Include="Implementations\DocumentService.cs" />
     <Compile Include="Interfaces\IDocumentBuilder.cs" />
     <Compile Include="Interfaces\IDocumentService.cs" />
+    <Compile Include="Model\FaultEntry.cs" />
+    <Compile Include="Model\IdentifiedEntry.cs" />
     <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

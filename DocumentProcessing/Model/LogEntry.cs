@@ -11,10 +11,8 @@ namespace DocumentProcessing.Model
     /// https://www.asp.net/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application
     /// 
     /// </summary>
-    public class LogEntry
+    public class LogEntry : IdentifiedEntry
     {
-        public int ID { get; set; }
-
         public DateTime EventDate { get; set; }
 
         public string IPHost { get; set; }
