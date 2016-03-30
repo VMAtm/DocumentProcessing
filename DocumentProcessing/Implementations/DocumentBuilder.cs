@@ -10,16 +10,18 @@ namespace DocumentProcessing.Implementations
     {
         public Stream GenerateDocument(string content)
         {
-            var docId = Guid.NewGuid();
-            var path = string.Format(@"\Document{0}.pdf", docId);
+            var result = new MemoryStream();
+            using (var buffer = new MemoryStream())
             using (var doc = new Document())
-            using (var fs = new FileStream(path, FileMode.Create))
-            using (PdfWriter.GetInstance(doc, fs))
+            using (PdfWriter.GetInstance(doc, buffer))
             {
                 doc.Open();
                 doc.Add(new Paragraph(content));
+                buffer.Position = 0;
+                buffer.CopyTo(result);
             }
-            return File.OpenRead(path);
+            
+            return result;
         }
     }
 }
