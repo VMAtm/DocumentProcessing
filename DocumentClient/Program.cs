@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DocumentClient.DocService;
 
 namespace DocumentClient
@@ -21,7 +17,6 @@ namespace DocumentClient
                 using (var stream = documentsServiceProxy.GenerateDocument(line))
                 using (var file = new FileStream("test.pdf", FileMode.Create, FileAccess.Write))
                 {
-                    stream.Seek(0, SeekOrigin.Begin);
                     stream.CopyTo(file);
                 }
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using DocumentProcessing.Interfaces;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -10,18 +9,20 @@ namespace DocumentProcessing.Implementations
     {
         public Stream GenerateDocument(string content)
         {
-            var result = new MemoryStream();
+            byte[] pdfBytes;
+
             using (var buffer = new MemoryStream())
-            using (var doc = new Document())
-            using (PdfWriter.GetInstance(doc, buffer))
             {
-                doc.Open();
-                doc.Add(new Paragraph(content));
-                buffer.Position = 0;
-                buffer.CopyTo(result);
+                using (var doc = new Document())
+                using (PdfWriter.GetInstance(doc, buffer))
+                {
+                    doc.Open();
+                    doc.Add(new Paragraph(content));
+                    doc.CloseDocument();
+                }
+                pdfBytes = buffer.ToArray();
             }
-            
-            return result;
+            return new MemoryStream(pdfBytes);
         }
     }
 }

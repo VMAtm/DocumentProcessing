@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
-using System.ServiceModel;
 using DocumentProcessing.Implementations;
 using DocumentProcessing.Interfaces;
 using Ninject;
@@ -16,7 +14,6 @@ namespace DocumentProcessing
         static void Main(string[] args)
         {
             var docServiceToHost = NinjectWcfConfiguration.Create<DocumentService, NinjectServiceSelfHostFactory>();
-
             using (var selfHost = new NinjectSelfHostBootstrapper(CreateKernel, docServiceToHost))
             {
                 selfHost.Start();
