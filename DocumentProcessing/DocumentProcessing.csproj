@@ -83,8 +83,13 @@
   <ItemGroup>
     <Compile Include="DocumentServiceHost.cs" />
     <Compile Include="Implementations\DocumentBuilder.cs" />
+    <Compile Include="Implementations\DocumentLogger.cs" />
     <Compile Include="Implementations\DocumentService.cs" />
+    <Compile Include="Implementations\LoggingInvoker.cs" />
+    <Compile Include="Implementations\LogOperationBehavior.cs" />
+    <Compile Include="Implementations\ServiceLoggingBehavior.cs" />
     <Compile Include="Interfaces\IDocumentBuilder.cs" />
+    <Compile Include="Interfaces\IDocumentLogger.cs" />
     <Compile Include="Interfaces\IDocumentService.cs" />
     <Compile Include="Interfaces\IServiceLogContext .cs" />
     <Compile Include="Model\FaultEntry.cs" />

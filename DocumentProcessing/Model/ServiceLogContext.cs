@@ -6,9 +6,10 @@ namespace DocumentProcessing.Model
 {
     public class ServiceLogContext : DbContext, IServiceLogContext
     {
-        //public ServiceLogContext() : base("name=ServiceLogContext")
-        //{
-        //}
+        public ServiceLogContext(string connectionString)
+            : base(connectionString)
+        {
+        }
 
         public DbSet<LogEntry> LogEntries { get; set; }
         public DbSet<FaultEntry> Faults { get; set; }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Reflection;
+using System.ServiceModel.Description;
+using System.ServiceModel.Dispatcher;
 using DocumentProcessing.Implementations;
 using DocumentProcessing.Interfaces;
 using DocumentProcessing.Model;
@@ -13,12 +15,6 @@ namespace DocumentProcessing
 {
     static class DocumentServiceHost
     {
-        /// <summary>
-        /// http://stackoverflow.com/q/25102582/213550
-        /// https://pieterderycke.wordpress.com/2011/05/09/using-an-ioc-container-to-create-wcf-service-instances/
-        /// http://codereview.stackexchange.com/q/33379/4889
-        /// </summary>
-        /// <param name="args"></param>
         static void Main(string[] args)
         {
             var docServiceToHost = NinjectWcfConfiguration.Create<DocumentService, NinjectServiceSelfHostFactory>();
@@ -39,8 +35,15 @@ namespace DocumentProcessing
             kernel.Load(Assembly.GetExecutingAssembly());
             kernel.Bind<IDocumentService>().To<DocumentService>();
             kernel.Bind<IDocumentBuilder>().To<DocumentBuilder>();
+            kernel.Bind<IDocumentLogger>().To<DocumentLogger>();
+
+            kernel.Bind<IOperationInvoker>().To<LoggingInvoker>();
+            kernel.Bind<IOperationBehavior>().To<LogOperationBehavior>();
+            kernel.Bind<IServiceBehavior>().To<ServiceLoggingBehavior>();
+
             kernel.Bind<IServiceLogContext>().To<ServiceLogContext>()
                 .WithConstructorArgument("connectionString", connectionString);
+
             return kernel;
         }
     }

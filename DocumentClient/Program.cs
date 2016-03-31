@@ -20,6 +20,7 @@ namespace DocumentClient
 
             using (var documentsServiceProxy = new DocumentServiceClient())
             {
+                Console.WriteLine(documentsServiceProxy.GetLog());
                 using (var stream = documentsServiceProxy.GenerateDocument(line))
                 using (var file = new FileStream(testFilePath, FileMode.Create, FileAccess.Write))
                 {
