@@ -67,6 +67,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services" />
     <Reference Include="System.ServiceModel" />
@@ -85,9 +86,11 @@
     <Compile Include="Implementations\DocumentService.cs" />
     <Compile Include="Interfaces\IDocumentBuilder.cs" />
     <Compile Include="Interfaces\IDocumentService.cs" />
+    <Compile Include="Interfaces\IServiceLogContext .cs" />
     <Compile Include="Model\FaultEntry.cs" />
     <Compile Include="Model\IdentifiedEntry.cs" />
     <Compile Include="Model\LogEntry.cs" />
+    <Compile Include="Model\ServiceLogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

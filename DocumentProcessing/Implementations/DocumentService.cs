@@ -6,10 +6,12 @@ namespace DocumentProcessing.Implementations
     public sealed class DocumentService : IDocumentService
     {
         private readonly IDocumentBuilder _docBuilder;
+        private readonly IServiceLogContext db;
 
-        public DocumentService(IDocumentBuilder docBuilder)
+        public DocumentService(IDocumentBuilder docBuilder, IServiceLogContext context)
         {
             _docBuilder = docBuilder;
+            db = context;
         }
 
         public Stream GenerateDocument(string documentText)
@@ -30,8 +32,7 @@ namespace DocumentProcessing.Implementations
         /// <returns></returns>
         public int GetLog()
         {
-            
-            return 0;
+            return db.LogEntries.Local.Count;
         }
     }
 }
