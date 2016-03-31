@@ -27,12 +27,11 @@ namespace DocumentProcessing.Implementations
 
         public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
-            foreach (var operation in serviceDescription.Endpoints.SelectMany(endpoint => endpoint.Contract.Operations))
+            foreach (var operation in serviceDescription.Endpoints
+                .SelectMany(endpoint => endpoint.Contract.Operations)
+                .Where(operation => operation.Name.Equals("GenerateDocument", StringComparison.InvariantCultureIgnoreCase)))
             {
-                if (operation.Name.Equals("GenerateDocument", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    operation.Behaviors.Add(_loggingBehavior);
-                }
+                operation.Behaviors.Add(_loggingBehavior);
             }
         }
     }
