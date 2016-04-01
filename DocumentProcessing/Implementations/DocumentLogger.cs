@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Data.Entity;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using DocumentProcessing.Interfaces;
 using DocumentProcessing.Model;
 
@@ -16,12 +17,15 @@ namespace DocumentProcessing.Implementations
 
         public void Info(string info)
         {
+            var incoming = OperationContext.Current.IncomingMessageProperties;
+            var endpoint = incoming[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
+
             _context.Info(new LogEntry
             {
                 InputString = info,
                 EventDate = DateTime.UtcNow,
-                IPHost = "",
-                Port = 0
+                IPHost = endpoint?.Address,
+                Port = endpoint?.Port ?? 0
             });
         }
 
