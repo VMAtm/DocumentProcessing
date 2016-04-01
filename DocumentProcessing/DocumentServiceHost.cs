@@ -40,6 +40,7 @@ namespace DocumentProcessing
             _kernel.Bind<IDocumentBuilder>().To<DocumentBuilder>();
             _kernel.Bind<IDocumentLogger>().To<DocumentLogger>();
 
+            _kernel.Bind<IErrorHandler>().To<ErrorHandler>();
             _kernel.Bind<IOperationInvoker>().To<LoggingInvoker>();
             _kernel.Bind<IOperationBehavior>().To<LogOperationBehavior>();
 
