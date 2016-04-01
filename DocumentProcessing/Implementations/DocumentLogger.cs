@@ -16,23 +16,21 @@ namespace DocumentProcessing.Implementations
 
         public void Info(string info)
         {
-            _context.LogEntries.Add(new LogEntry
+            _context.Info(new LogEntry
             {
                 InputString = info,
                 EventDate = DateTime.UtcNow,
                 IPHost = "",
                 Port = 0
             });
-            ((DbContext) _context).SaveChanges();
         }
 
         public void Fatal(Exception exception)
         {
-            _context.Faults.Add(new FaultEntry
+            _context.Fatal(new FaultEntry
             {
                 StackTrace = exception.ToString()
             });
-            ((DbContext)_context).SaveChanges();
         }
     }
 }

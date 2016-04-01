@@ -15,9 +15,12 @@ namespace DocumentProcessing
 {
     static class DocumentServiceHost
     {
+        private static IKernel _kernel;
+
         static void Main(string[] args)
         {
             var docServiceToHost = NinjectWcfConfiguration.Create<DocumentService, NinjectServiceSelfHostFactory>();
+            
             using (var selfHost = new NinjectSelfHostBootstrapper(CreateKernel, docServiceToHost))
             {
                 selfHost.Start();
@@ -29,22 +32,21 @@ namespace DocumentProcessing
 
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            _kernel = new StandardKernel();
             var connectionString = ConfigurationManager.ConnectionStrings["ServiceLogContext"].ConnectionString;
 
-            kernel.Load(Assembly.GetExecutingAssembly());
-            kernel.Bind<IDocumentService>().To<DocumentService>();
-            kernel.Bind<IDocumentBuilder>().To<DocumentBuilder>();
-            kernel.Bind<IDocumentLogger>().To<DocumentLogger>();
+            _kernel.Load(Assembly.GetExecutingAssembly());
+            _kernel.Bind<IDocumentService>().To<DocumentService>();
+            _kernel.Bind<IDocumentBuilder>().To<DocumentBuilder>();
+            _kernel.Bind<IDocumentLogger>().To<DocumentLogger>();
 
-            kernel.Bind<IOperationInvoker>().To<LoggingInvoker>();
-            kernel.Bind<IOperationBehavior>().To<LogOperationBehavior>();
-            kernel.Bind<IServiceBehavior>().To<ServiceLoggingBehavior>();
+            _kernel.Bind<IOperationInvoker>().To<LoggingInvoker>();
+            _kernel.Bind<IOperationBehavior>().To<LogOperationBehavior>();
 
-            kernel.Bind<IServiceLogContext>().To<ServiceLogContext>()
+            _kernel.Bind<IServiceLogContext>().To<ServiceLogContext>()
                 .WithConstructorArgument("connectionString", connectionString);
 
-            return kernel;
+            return _kernel;
         }
     }
 }

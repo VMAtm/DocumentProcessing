@@ -5,7 +5,10 @@ namespace DocumentProcessing.Interfaces
 {
     public interface IServiceLogContext
     {
-        DbSet<LogEntry> LogEntries { get; set; }
-        DbSet<FaultEntry> Faults { get; set; }
+        int GetLog();
+
+        void Info(LogEntry log);
+
+        void Fatal(FaultEntry fault);
     }
 }

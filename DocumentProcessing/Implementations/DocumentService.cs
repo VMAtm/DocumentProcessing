@@ -21,7 +21,7 @@ namespace DocumentProcessing.Implementations
 
         public int GetLog()
         {
-            return _db.LogEntries.Local.Count;
+            return _db.GetLog();
         }
     }
 }

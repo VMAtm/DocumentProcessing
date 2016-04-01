@@ -7,7 +7,9 @@ using System.ServiceModel.Description;
 
 namespace DocumentProcessing.Implementations
 {
+    // ReSharper disable UnusedMember.Global
     public class ServiceLoggingBehavior : IServiceBehavior
+    // ReSharper restore UnusedMember.Global
     {
         private readonly IOperationBehavior _loggingBehavior;
 
