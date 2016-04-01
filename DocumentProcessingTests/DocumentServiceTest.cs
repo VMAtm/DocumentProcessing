@@ -18,6 +18,7 @@ namespace DocumentProcessingTests
     {
         private static NinjectSelfHostBootstrapper _selfHost;
         private static DocumentServiceClient _documentsServiceProxy;
+        private static MoqMockingKernel _kernel;
 
         [OneTimeSetUp]
         // ReSharper disable UnusedMember.Global
@@ -32,9 +33,11 @@ namespace DocumentProcessingTests
 
         private static IKernel CreateKernel()
         {
-            var kernel = new MoqMockingKernel();
-            kernel.Bind<IDocumentBuilder>().ToMock();
-            return kernel;
+            _kernel = new MoqMockingKernel();
+            _kernel.Bind<IDocumentBuilder>().ToMock();
+            _kernel.Bind<IDocumentLogger>().ToMock();
+            _kernel.Bind<IServiceLogContext>().ToMock();
+            return _kernel;
         }
 
         [OneTimeTearDown]
@@ -57,8 +60,12 @@ namespace DocumentProcessingTests
         /// </summary>
         /// <param name="expected"></param>
         [TestCase(0)]
+        [TestCase(5)]
         public void GetInitialLogTest(int expected)
         {
+            var logger = _kernel.GetMock<IServiceLogContext>();
+            logger.Setup(l => l.GetLog()).Returns(expected);
+
             Assert.AreEqual(_documentsServiceProxy.GetLog(), expected);
         }
 
